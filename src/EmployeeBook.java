@@ -16,7 +16,7 @@ public class EmployeeBook {
                 count++;
             }
         }
-        return (double)salaries / count;
+        return (double) salaries / count;
     }
 
     public void printEveryone() {
@@ -28,41 +28,50 @@ public class EmployeeBook {
     }
 
     public String toString() {
-       return Arrays.toString(employees);
+        return Arrays.toString(employees);
     }
 
     public Boolean addEmployee(Employee employee) {
-        if (employee == null){
+        if (employee == null) {
             return false;
-        }for (int i = 0; i < employees.length; i++) {
-            if(employees[i] != null){
+        }
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i] != null) {
                 continue;
-            }else {
+            } else {
                 employees[i] = employee;
-                break;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
-    public double taxes(Employee employee, String taxType) {
-        double tax = 0;
-        double salary = (double) employee.getSalary();
-        switch (taxType) {
-            case "PROPORTIONAL" :
-                tax = salary * 0.13;
-                break;
-            case "PROGRESSIVE":
-                if (employee.getSalary() <= 150) {
-                    tax = salary * 0.13;
-                } else if (salary <= 350) {
-                    tax = salary * 0.17;
-                } else {
-                tax = salary * 0.21;
-                }
+    public double taxes(String taxType) {
+        double sumTax = 0;
+        for (int i = 0; i <employees.length ; i++) {
+            if(employees[i] == null){
+                continue;
             }
-        return tax;
+            double tax = 0;
+            double salary = (double) employees[i].getSalary();
+            switch (taxType) {
+                case "PROPORTIONAL":
+                    tax = salary * 0.13;
+                    break;
+                case "PROGRESSIVE":
+                    if (employees[i].getSalary() <= 150) {
+                        tax = salary * 0.13;
+                    } else if (salary <= 350) {
+                        tax = salary * 0.17;
+                    } else {
+                        tax = salary * 0.21;
+                    }
+            }
+            System.out.println("Налог сотрудника по цифрой " + employees[i].getId() + ": " + tax);
+            sumTax = sumTax + tax;
         }
+        return sumTax;
+    }
 
     public void findFirstFromDepartment(int department) {
         for (int i = 0; i < employees.length; i++) {
@@ -78,7 +87,17 @@ public class EmployeeBook {
             if (employees[i] != null && employees[i].equals(employee)) {
                 return true;
             }
-        }return false;
+        }
+        return false;
+    }
+
+    public void findEmployeeWithSalary(int department, int salary) {
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getDepartment() == department && employees[i].getSalary() > salary) {
+                employees[i].printShortInfo();
+                break;
+            }
+        }
     }
 
     public void findEmployeesWithSalaryLower(int wage, int employeeNumber) {
@@ -107,4 +126,14 @@ public class EmployeeBook {
         }
         return null;
     }
+
+    public void raiseSalaryByDepartment(int department, int percentage) {
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getDepartment() != department) {
+                continue;
+            }else {
+                employees[i].setSalary((int) (employees[i].getSalary() * (1 + percentage / 100.0)));
+            }
+        }
     }
+}

@@ -12,5 +12,6 @@ void main() {
     System.out.println(employeeBook.averageSalary());
     employeeBook.findFirstFromDepartment(2);
     System.out.println(employeeBook.findBySalary(bob));
+    employeeBook.taxes("PROPORTIONAL");
 
 }

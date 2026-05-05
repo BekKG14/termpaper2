@@ -41,7 +41,7 @@ public class Employee {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, department, salary);
+        return Objects.hash(salary);
     }
 
     public String getName() {
