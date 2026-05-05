@@ -50,7 +50,7 @@ public class EmployeeBook {
         double sumTax = 0;
         for (int i = 0; i <employees.length ; i++) {
             if(employees[i] == null){
-                break;
+                continue;
             }
             double tax = 0;
             double salary = (double) employees[i].getSalary();
@@ -93,7 +93,7 @@ public class EmployeeBook {
 
     public void findEmployeeWithSalary(int department, int salary) {
         for (int i = 0; i < employees.length; i++) {
-            if (employees[i].getId() == department && employees[i].getSalary() > salary) {
+            if (employees[i].getDepartment() == department && employees[i].getSalary() > salary) {
                 employees[i].printShortInfo();
                 break;
             }
@@ -127,12 +127,12 @@ public class EmployeeBook {
         return null;
     }
 
-    public void raiseSalaryByDepartment(int id, int percentage) {
+    public void raiseSalaryByDepartment(int department, int percentage) {
         for (int i = 0; i < employees.length; i++) {
-            if (employees[i].getId() != id) {
+            if (employees[i].getDepartment() != department) {
                 continue;
             }else {
-                employees[i].setSalary((int) (employees[i].getSalary() * percentage) / 100);
+                employees[i].setSalary((int) (employees[i].getSalary() * (1 + percentage / 100.0)));
             }
         }
     }
